@@ -75,54 +75,51 @@ public class mergeSort {
    */
   public static ArrayList<String> MergeSort(ArrayList<String> list) {
     if(list.size()<=1){
-        return list;
+      return list;
     }else{
-        ArrayList<String> left = new ArrayList<String> (list.subList(0, list.size()/2));
-        ArrayList<String> right = new ArrayList<String> (list.subList(list.size()/2, list.size()));
-        MergeSort(left);
-        MergeSort(right);
-        return merge(left, right);
-      }
-    }
-    /**
-     * Merge the left and right lists together in sorted order.
-     *
-     * @param leftList The first list to be merged.
-     * @param rightList The second list to be merged.
-     * @return A single list by merging the two parameters in sorted order.
-     */
-    private static ArrayList<String> merge(ArrayList<String> leftList, ArrayList<String> rightList) {
-      ArrayList< String > merged = new ArrayList< String >();
-      int rite=0;
-      int lefft=0;
-      for(int i=0; i < merged.size(); i++)
-      {
-        if(lefft>=rightList.size()||(rite<leftList.size()&&(leftList.get(rite).compareTo(rightList.get(lefft))<0)))
-        {
-          merged.set(i, leftList.get(rite));
-          rite++;
-        }
-        else
-        {
-          merged.set(i, rightList.get(lefft));
-          lefft++;
-        }
-      }
-      return merged;
-    }
-    /**
-     * create an ArrayList<String> and populate it from text file
-     *
-     * @return an ArrayList<String>
-     * @throws FileNotFoundException
-     */
-    public static ArrayList<String> getWords() throws FileNotFoundException {
-      ArrayList<String> result = new ArrayList<String>();
-      Scanner input = new Scanner(new File("words.txt"));
-      while(input.hasNextLine()) {
-        result.add(input.nextLine());
-      }
-      input.close();
-      return result;
+      ArrayList<String> left = new ArrayList<String> (list.subList(0, list.size()/2));
+      ArrayList<String> right = new ArrayList<String> (list.subList(list.size()/2, list.size()));
+      MergeSort(left);
+      MergeSort(right);
+      return merge(left, right, list);
     }
   }
+  /**
+   * Merge the left and right lists together in sorted order.
+   *
+   * @param leftList The first list to be merged.
+   * @param rightList The second list to be merged.
+   * @return A single list by merging the two parameters in sorted order.
+   */
+  private static ArrayList<String> merge(ArrayList<String> leftList, ArrayList<String> rightList, ArrayList<String> list) {
+    int rite=0;
+    int lefft=0;
+    int entire=0;
+    while(lefft<leftList.size() && rite<rightList.size())
+    {
+      if((leftList.get(lefft).compareTo(rightList.get(rite)))<0){
+        list.set(entire, leftList.get(lefft));
+        lefft++;
+      }else{
+        list.set(entire, rightList.get(rite));
+        rite++;
+      }
+    }
+    return list;
+  }
+  /**
+   * create an ArrayList<String> and populate it from text file
+   *
+   * @return an ArrayList<String>
+   * @throws FileNotFoundException
+   */
+  public static ArrayList<String> getWords() throws FileNotFoundException {
+    ArrayList<String> result = new ArrayList<String>();
+    Scanner input = new Scanner(new File("words.txt"));
+    while(input.hasNextLine()) {
+      result.add(input.nextLine());
+    }
+    input.close();
+    return result;
+  }
+}
